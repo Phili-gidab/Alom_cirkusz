@@ -7,12 +7,9 @@ import Logo from './Logo'
 import LegalModal from './LegalModal'
 import { useReducedMotion } from '../hooks/useReducedMotion'
 
-const SOCIALS = [
-  { name: 'Instagram', url: 'https://instagram.com' },
-  { name: 'Facebook', url: 'https://facebook.com' },
-  { name: 'TikTok', url: 'https://tiktok.com' },
-  { name: 'YouTube', url: 'https://youtube.com' },
-]
+// Instagram is the circus's only channel.
+// TBC — needs the real profile URL; this is a placeholder.
+const SOCIALS = [{ name: 'Instagram', url: 'https://instagram.com' }]
 
 export default function Footer() {
   const root = useRef(null)
