@@ -4,11 +4,10 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SmartImage from './SmartImage'
 import { IMAGES } from '../data/images'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const reduceMotion = () =>
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const finePointer = () => window.matchMedia('(pointer: fine)').matches
 
 // backstage shots hiding in the dark (aerial, mystery figure, fire glow)
@@ -18,12 +17,13 @@ export default function Spotlight() {
   const root = useRef(null)
   const { t } = useTranslation()
   const captions = t('night.captions', { returnObjects: true })
+  const reduced = useReducedMotion()
 
   useEffect(() => {
     const el = root.current
     const radius = () => Math.max(150, Math.min(window.innerWidth * 0.17, 260))
 
-    if (reduceMotion()) {
+    if (reduced) {
       // lights simply on — everything softly revealed, nothing moves
       el.style.setProperty('--spot-r', '60vmax')
       el.style.setProperty('--spot-x', '50%')
@@ -88,7 +88,7 @@ export default function Spotlight() {
       ctx.revert()
       gsap.killTweensOf(pos)
     }
-  }, [])
+  }, [reduced])
 
   return (
     <section className="spot section-dark" id="ejszaka" ref={root} data-cursor>

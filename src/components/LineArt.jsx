@@ -2,11 +2,9 @@ import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 
 gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin)
-
-const reduceMotion = () =>
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 // Flag positions sampled along the bunting string curve
 const FLAGS = [
@@ -22,9 +20,10 @@ const FLAGS = [
 /** A garland of pennant flags that draws itself in as the section enters. */
 export function BuntingDoodle({ className = '' }) {
   const ref = useRef(null)
+  const reduced = useReducedMotion()
 
   useEffect(() => {
-    if (reduceMotion()) return
+    if (reduced) return
     const ctx = gsap.context(() => {
       gsap.from('.doodle-stroke', {
         drawSVG: '0%',
@@ -39,7 +38,7 @@ export function BuntingDoodle({ className = '' }) {
       })
     }, ref)
     return () => ctx.revert()
-  }, [])
+  }, [reduced])
 
   return (
     <svg
@@ -65,9 +64,10 @@ export function BuntingDoodle({ className = '' }) {
 /** A seated trapeze artist who draws herself in, then swings gently. */
 export function TrapezeDoodle({ className = '' }) {
   const ref = useRef(null)
+  const reduced = useReducedMotion()
 
   useEffect(() => {
-    if (reduceMotion()) return
+    if (reduced) return
     const ctx = gsap.context(() => {
       gsap.set(ref.current, { rotation: -5.5, transformOrigin: '50% 0%' })
       gsap
@@ -94,7 +94,7 @@ export function TrapezeDoodle({ className = '' }) {
         )
     }, ref)
     return () => ctx.revert()
-  }, [])
+  }, [reduced])
 
   return (
     <svg
@@ -120,9 +120,10 @@ export function TrapezeDoodle({ className = '' }) {
 /** A little asterisk-spark that draws itself when an FAQ answer opens. */
 export function FaqFlourish() {
   const ref = useRef(null)
+  const reduced = useReducedMotion()
 
   useEffect(() => {
-    if (reduceMotion()) return
+    if (reduced) return
     const ctx = gsap.context(() => {
       gsap.from('.doodle-stroke', {
         drawSVG: '0%',
@@ -133,7 +134,7 @@ export function FaqFlourish() {
       })
     }, ref)
     return () => ctx.revert()
-  }, [])
+  }, [reduced])
 
   return (
     <svg ref={ref} className="doodle faq-flourish" viewBox="0 0 40 40" fill="none" aria-hidden="true">

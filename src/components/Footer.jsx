@@ -1,9 +1,10 @@
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import Marquee from './Marquee'
 import Logo from './Logo'
+import LegalModal from './LegalModal'
 import { useReducedMotion } from '../hooks/useReducedMotion'
 
 const SOCIALS = [
@@ -17,6 +18,19 @@ export default function Footer() {
   const root = useRef(null)
   const { t, i18n } = useTranslation()
   const reduced = useReducedMotion()
+  const [legal, setLegal] = useState(null) // 'imprint' | 'privacy' | null
+
+  // open straight from a shared link, e.g. .../#adatvedelem
+  useEffect(() => {
+    const fromHash = () => {
+      const h = window.location.hash
+      if (h === '#impresszum') setLegal('imprint')
+      else if (h === '#adatvedelem') setLegal('privacy')
+    }
+    fromHash()
+    window.addEventListener('hashchange', fromHash)
+    return () => window.removeEventListener('hashchange', fromHash)
+  }, [])
 
   useGSAP(
     () => {
@@ -101,6 +115,8 @@ export default function Footer() {
             <button
               className={`lang-btn ${i18n.language === 'hu' ? 'is-active' : ''}`}
               onClick={() => i18n.changeLanguage('hu')}
+              aria-pressed={i18n.language === 'hu'}
+              aria-label={t('a11y.langHu')}
             >
               HU
             </button>
@@ -108,6 +124,8 @@ export default function Footer() {
             <button
               className={`lang-btn ${i18n.language === 'en' ? 'is-active' : ''}`}
               onClick={() => i18n.changeLanguage('en')}
+              aria-pressed={i18n.language === 'en'}
+              aria-label={t('a11y.langEn')}
             >
               EN
             </button>
@@ -117,11 +135,22 @@ export default function Footer() {
 
       <div className="footer-bottom container">
         <p>{t('footer.legal')}</p>
+        <nav className="footer-legal-links" aria-label={t('legal.label')}>
+          <button type="button" className="footer-legal-link" onClick={() => setLegal('imprint')}>
+            {t('legal.imprintLink')}
+          </button>
+          <span aria-hidden="true">·</span>
+          <button type="button" className="footer-legal-link" onClick={() => setLegal('privacy')}>
+            {t('legal.privacyLink')}
+          </button>
+        </nav>
         <p className="footer-credit">✶ {t('footer.credit')}</p>
-        <button className="footer-top" onClick={toTop} aria-label="Vissza a tetejére">
+        <button className="footer-top" onClick={toTop} aria-label={t('a11y.toTop')}>
           ↑
         </button>
       </div>
+
+      <LegalModal doc={legal} onClose={() => setLegal(null)} />
     </footer>
   )
 }

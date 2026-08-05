@@ -17,12 +17,17 @@ export default function CustomCursor() {
     const ringX = gsap.quickTo(ring, 'x', { duration: 0.45, ease: 'power3' })
     const ringY = gsap.quickTo(ring, 'y', { duration: 0.45, ease: 'power3' })
 
+    let shown = false
     const move = (e) => {
       dotX(e.clientX)
       dotY(e.clientY)
       ringX(e.clientX)
       ringY(e.clientY)
-      document.body.classList.add('cursor-active')
+      // only touch the DOM once, not on every single mousemove
+      if (!shown) {
+        shown = true
+        document.body.classList.add('cursor-active')
+      }
     }
     const over = (e) => {
       if (e.target.closest('a, button, [data-cursor]')) ring.classList.add('is-hover')
@@ -38,6 +43,10 @@ export default function CustomCursor() {
       window.removeEventListener('mousemove', move)
       document.removeEventListener('mouseover', over)
       document.removeEventListener('mouseout', out)
+      // the class hides the real pointer — leaving it behind on unmount would
+      // strand the page with no visible cursor at all
+      document.body.classList.remove('cursor-active')
+      gsap.killTweensOf([dot, ring])
     }
   }, [])
 

@@ -14,6 +14,15 @@ import { initReactI18next } from 'react-i18next'
 const resources = {
   hu: {
     translation: {
+      a11y: {
+        mainNav: 'Főmenü',
+        langGroup: 'Nyelvválasztás',
+        toTop: 'Vissza az oldal tetejére',
+        langHu: 'Váltás magyar nyelvre',
+        langEn: 'Váltás angol nyelvre',
+        openMenu: 'Menü megnyitása',
+        closeMenu: 'Menü bezárása',
+      },
       nav: {
         rolunk: 'Rólunk',
         musor: 'A műsor',
@@ -306,6 +315,62 @@ const resources = {
         fallbackB: 'és lefoglaljuk a helyed.',
         close: 'Bezárás',
       },
+      legal: {
+        label: 'Jogi tudnivalók',
+        updated: 'Utolsó frissítés: 2026. augusztus',
+        imprintLink: 'Impresszum',
+        privacyLink: 'Adatkezelési tájékoztató',
+        imprint: {
+          title: 'Impresszum',
+          sections: [
+            {
+              h: 'A szolgáltató adatai',
+              p: 'Cégnév: Álom Cirkusz [KIEGÉSZÍTENDŐ: teljes cégnév]\nSzékhely: [KIEGÉSZÍTENDŐ: postai cím]\nCégjegyzékszám: [KIEGÉSZÍTENDŐ]\nAdószám: [KIEGÉSZÍTENDŐ]\nNyilvántartó hatóság: [KIEGÉSZÍTENDŐ: cégbíróság]',
+            },
+            {
+              h: 'Elérhetőség',
+              p: 'E-mail: info@alomcirkusz.hu\nTelefon: +36 1 343 9637\nÜgyfélszolgálat: hétköznap 9:00–17:00',
+            },
+            {
+              h: 'Tárhelyszolgáltató',
+              p: 'Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, USA\nsupport@vercel.com',
+            },
+            {
+              h: 'Szerzői jog',
+              p: 'Az oldalon szereplő szövegek, fotók és grafikai elemek az Álom Cirkusz tulajdonát képezik. Felhasználásuk kizárólag előzetes írásbeli engedéllyel lehetséges.',
+            },
+          ],
+        },
+        privacy: {
+          title: 'Adatkezelési tájékoztató',
+          sections: [
+            {
+              h: 'Milyen adatokat kezelünk?',
+              p: 'Jegyfoglaláskor a nevedet, e-mail-címedet és telefonszámodat kérjük el. A kapcsolatfelvételi űrlapon a nevedet, e-mail-címedet és az üzeneted tartalmát.',
+            },
+            {
+              h: 'Miért kezeljük?',
+              p: 'Kizárólag azért, hogy a foglalásodat visszaigazoljuk, illetve hogy a megkeresésedre válaszolni tudjunk. Az adatkezelés jogalapja a hozzájárulásod (GDPR 6. cikk (1) a) pont).',
+            },
+            {
+              h: 'Meddig őrizzük meg?',
+              p: 'A foglalási adatokat az előadás időpontját követő 30 napig, a kapcsolatfelvételi üzeneteket a válaszadástól számított 12 hónapig tároljuk, majd töröljük.',
+            },
+            {
+              h: 'Kinek adjuk át?',
+              p: 'Senkinek. Az adataidat nem adjuk el, nem adjuk át harmadik félnek és nem használjuk marketingcélra. Az oldal nem használ analitikai vagy hirdetési sütiket.\nAz űrlapok jelenleg a saját levelezőprogramodban nyitnak meg egy kész üzenetet — az adatok az e-mail-szolgáltatódon keresztül jutnak el hozzánk.',
+            },
+            {
+              h: 'Milyen jogaid vannak?',
+              p: 'Kérheted az adataidhoz való hozzáférést, azok helyesbítését, törlését vagy a kezelés korlátozását, és bármikor visszavonhatod a hozzájárulásodat. Írj az info@alomcirkusz.hu címre, és 30 napon belül intézkedünk.',
+            },
+            {
+              h: 'Panasz',
+              p: 'Ha úgy érzed, jogsértően kezeljük az adataidat, panasszal fordulhatsz a Nemzeti Adatvédelmi és Információszabadság Hatósághoz (NAIH, 1055 Budapest, Falk Miksa utca 9-11., ugyfelszolgalat@naih.hu), illetve bírósághoz.',
+            },
+          ],
+        },
+      },
       footer: {
         bigline1: 'Készen állsz',
         bigline2: 'a varázslatra?',
@@ -322,6 +387,15 @@ const resources = {
   },
   en: {
     translation: {
+      a11y: {
+        mainNav: 'Main menu',
+        langGroup: 'Language selection',
+        toTop: 'Back to top of page',
+        langHu: 'Switch to Hungarian',
+        langEn: 'Switch to English',
+        openMenu: 'Open menu',
+        closeMenu: 'Close menu',
+      },
       nav: {
         rolunk: 'About',
         musor: 'The show',
@@ -607,6 +681,62 @@ const resources = {
         fallbackA: 'If your email app did not open, write to us at',
         fallbackB: 'and we’ll reserve your seats.',
         close: 'Close',
+      },
+      legal: {
+        label: 'Legal',
+        updated: 'Last updated: August 2026',
+        imprintLink: 'Imprint',
+        privacyLink: 'Privacy notice',
+        imprint: {
+          title: 'Imprint',
+          sections: [
+            {
+              h: 'Service provider',
+              p: 'Company: Álom Cirkusz [TO BE COMPLETED: full registered name]\nRegistered address: [TO BE COMPLETED]\nCompany registration number: [TO BE COMPLETED]\nTax number: [TO BE COMPLETED]\nRegistering authority: [TO BE COMPLETED]',
+            },
+            {
+              h: 'Contact',
+              p: 'Email: info@alomcirkusz.hu\nPhone: +36 1 343 9637\nOffice hours: weekdays 9:00–17:00',
+            },
+            {
+              h: 'Hosting provider',
+              p: 'Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, USA\nsupport@vercel.com',
+            },
+            {
+              h: 'Copyright',
+              p: 'All text, photography and graphics on this site belong to Álom Cirkusz and may only be reused with prior written permission.',
+            },
+          ],
+        },
+        privacy: {
+          title: 'Privacy notice',
+          sections: [
+            {
+              h: 'What we collect',
+              p: 'When you book tickets we ask for your name, email address and phone number. The contact form collects your name, email address and your message.',
+            },
+            {
+              h: 'Why we collect it',
+              p: 'Solely to confirm your booking and to reply to your enquiry. The legal basis is your consent (GDPR Article 6(1)(a)).',
+            },
+            {
+              h: 'How long we keep it',
+              p: 'Booking details are kept for 30 days after the performance date; contact messages for 12 months after we reply. Both are then deleted.',
+            },
+            {
+              h: 'Who we share it with',
+              p: 'Nobody. We do not sell your data, pass it to third parties or use it for marketing. This site uses no analytics or advertising cookies.\nThe forms currently open a prepared message in your own email client, so your details reach us via your email provider.',
+            },
+            {
+              h: 'Your rights',
+              p: 'You may request access to your data, its correction, deletion or restriction of processing, and you may withdraw consent at any time. Write to info@alomcirkusz.hu and we will act within 30 days.',
+            },
+            {
+              h: 'Complaints',
+              p: 'If you believe we are handling your data unlawfully you may complain to the Hungarian National Authority for Data Protection and Freedom of Information (NAIH, 1055 Budapest, Falk Miksa utca 9-11., ugyfelszolgalat@naih.hu) or to a court.',
+            },
+          ],
+        },
       },
       footer: {
         bigline1: 'Ready for',

@@ -73,7 +73,7 @@ export default function Gallery() {
           {row1.map((img, i) => (
             <figure className={`gal-item gal-item--${i % 3}`} key={i} data-cursor>
               <SmartImage img={img} className="gal-img-el" />
-              <figcaption className="gal-caption">✶ {t('gallery.hint')}</figcaption>
+              <figcaption className="gal-caption" aria-hidden="true">✶ {img.alt}</figcaption>
             </figure>
           ))}
         </div>
@@ -81,7 +81,7 @@ export default function Gallery() {
           {row2.map((img, i) => (
             <figure className={`gal-item gal-item--${(i + 2) % 3}`} key={i} data-cursor>
               <SmartImage img={img} className="gal-img-el" />
-              <figcaption className="gal-caption">✶ {t('gallery.hint')}</figcaption>
+              <figcaption className="gal-caption" aria-hidden="true">✶ {img.alt}</figcaption>
             </figure>
           ))}
         </div>

@@ -2,11 +2,9 @@ import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 
 gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin)
-
-const reduceMotion = () =>
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 // Rope sags 12 viewBox units at the middle (M0,50 Q500,62 1000,50):
 // y(t) = 50 + 24·t·(1−t), and the stage is 64px tall so units are true px.
@@ -16,9 +14,10 @@ const PAD = 34 // rope anchor breathing room at each edge
 export default function TightropeProgress({ loaded }) {
   const root = useRef(null)
   const walkerRef = useRef(null)
+  const reduced = useReducedMotion()
 
   useEffect(() => {
-    if (!loaded || reduceMotion()) return
+    if (!loaded || reduced) return
     const walker = walkerRef.current
 
     // lean into the scroll: Lenis velocity becomes a wobble
@@ -31,13 +30,24 @@ export default function TightropeProgress({ loaded }) {
     const ctx = gsap.context(() => {
       gsap.set(walker, { x: PAD - 24, transformOrigin: '50% 100%' })
 
-      // the rope and the little walker draw themselves in
-      gsap.from('.rope-draw', {
+      // The rope carries vector-effect: non-scaling-stroke (its SVG uses
+      // preserveAspectRatio="none", so without it the stroke would stretch).
+      // DrawSVG cannot measure such a path — it warned and silently did
+      // nothing. Wipe the rope in with a scale instead, and keep DrawSVG for
+      // the walker, whose SVG scales proportionally.
+      gsap.from('.rope-svg', {
+        scaleX: 0,
+        transformOrigin: '0% 50%',
+        duration: 1.1,
+        ease: 'power2.inOut',
+        delay: 0.9,
+      })
+      gsap.from('.walker-draw', {
         drawSVG: '0%',
         duration: 1.1,
         stagger: 0.07,
         ease: 'power2.inOut',
-        delay: 0.9,
+        delay: 1.1,
       })
       gsap.from(root.current, { opacity: 0, duration: 0.8, delay: 0.7 })
 
@@ -64,7 +74,7 @@ export default function TightropeProgress({ loaded }) {
       gsap.ticker.remove(tick)
       ctx.revert()
     }
-  }, [loaded])
+  }, [loaded, reduced])
 
   return (
     <div className="rope-stage" ref={root} aria-hidden="true">
@@ -75,20 +85,20 @@ export default function TightropeProgress({ loaded }) {
         fill="none"
       >
         <path
-          className="rope-draw rope-line"
+          className="rope-line"
           d="M0,50 Q500,62 1000,50"
           vectorEffect="non-scaling-stroke"
         />
       </svg>
       <div className="rope-walker" ref={walkerRef}>
         <svg viewBox="0 0 48 48" fill="none">
-          <path className="rope-draw walker-pole" d="M2,26 Q24,33 46,26" />
-          <path className="rope-draw walker-line" d="M24,25 L13,28" />
-          <path className="rope-draw walker-line" d="M24,25 L35,28" />
-          <path className="rope-draw walker-line" d="M24,25 L24,36" />
-          <circle className="rope-draw walker-line" cx="24" cy="18" r="5" />
-          <path className="rope-draw walker-line" d="M24,36 L20,46" />
-          <path className="rope-draw walker-line" d="M24,36 L29,45" />
+          <path className="walker-draw walker-pole" d="M2,26 Q24,33 46,26" />
+          <path className="walker-draw walker-line" d="M24,25 L13,28" />
+          <path className="walker-draw walker-line" d="M24,25 L35,28" />
+          <path className="walker-draw walker-line" d="M24,25 L24,36" />
+          <circle className="walker-draw walker-line" cx="24" cy="18" r="5" />
+          <path className="walker-draw walker-line" d="M24,36 L20,46" />
+          <path className="walker-draw walker-line" d="M24,36 L29,45" />
         </svg>
       </div>
     </div>

@@ -4,9 +4,7 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import SmartImage from './SmartImage'
 import { IMAGES } from '../data/images'
-
-const reduceMotion = () =>
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches
+import { useReducedMotion } from '../hooks/useReducedMotion'
 
 export default function Hero({ loaded }) {
   const root = useRef(null)
@@ -16,6 +14,7 @@ export default function Hero({ loaded }) {
   const acts = t('acts.list', { returnObjects: true })
   const [active, setActive] = useState(0)
   const len = acts.length
+  const reduced = useReducedMotion()
 
   const stars = useMemo(
     () =>
@@ -34,7 +33,7 @@ export default function Hero({ loaded }) {
   useGSAP(
     () => {
       if (!loaded) return
-      if (reduceMotion()) {
+      if (reduced) {
         gsap.set(['.hl-text', '[data-hero-fade]', '.hero-capcard'], {
           clearProps: 'all',
         })
@@ -81,25 +80,25 @@ export default function Hero({ loaded }) {
         scrollTrigger: { ...st, scrub: 0.4 },
       })
     },
-    { scope: root, dependencies: [loaded] }
+    { scope: root, dependencies: [loaded, reduced] }
   )
 
   // act carousel in the caption card
   useEffect(() => {
-    if (!loaded || reduceMotion()) return
+    if (!loaded || reduced) return
     const id = setInterval(() => setActive((a) => (a + 1) % len), 4500)
     return () => clearInterval(id)
-  }, [loaded, len])
+  }, [loaded, len, reduced])
 
   useEffect(() => {
-    if (!loaded || reduceMotion() || !cap.current) return
+    if (!loaded || reduced || !cap.current) return
     const tween = gsap.fromTo(
       cap.current.children,
       { yPercent: 60, opacity: 0 },
       { yPercent: 0, opacity: 1, duration: 0.6, stagger: 0.06, ease: 'power3.out' }
     )
     return () => tween.revert()
-  }, [active, loaded])
+  }, [active, loaded, reduced])
 
   const goTo = (target) => (e) => {
     e.preventDefault()
@@ -168,37 +167,34 @@ export default function Hero({ loaded }) {
         </div>
       </div>
 
-      <a
-        className="hero-capcard"
-        href="#musor"
-        onClick={goTo('#musor')}
-        aria-label={t('nav.musor')}
-      >
-        <div ref={cap}>
-          <span className="hc-n">
-            {String(active + 1).padStart(2, '0')} — {String(len).padStart(2, '0')}
+      {/* The dots are siblings of the link, not children: a <button> inside an
+          <a> is invalid HTML and browsers recover from it unpredictably. */}
+      <div className="hero-capcard">
+        <a className="hero-capcard-link" href="#musor" onClick={goTo('#musor')}>
+          <span ref={cap}>
+            <span className="hc-n">
+              {String(active + 1).padStart(2, '0')} — {String(len).padStart(2, '0')}
+            </span>
+            <span className="hc-label">✶ {t('hero.capLabel')}</span>
+            <span className="hc-name">{acts[active].name}</span>
           </span>
-          <span className="hc-label">✶ {t('hero.capLabel')}</span>
-          <span className="hc-name">{acts[active].name}</span>
-        </div>
-        <div className="hero-dots" aria-hidden="true">
-          {acts.map((_, i) => (
+        </a>
+        <div className="hero-dots" role="tablist" aria-label={t('hero.capLabel')}>
+          {acts.map((act, i) => (
             <button
               key={i}
               type="button"
+              role="tab"
+              aria-selected={i === active}
+              aria-label={act.name}
               className={`hero-dot${i === active ? ' active' : ''}`}
-              onClick={(e) => {
-                e.preventDefault()
-                e.stopPropagation()
-                setActive(i)
-              }}
-              tabIndex={-1}
+              onClick={() => setActive(i)}
             >
-              <span />
+              <span aria-hidden="true" />
             </button>
           ))}
         </div>
-      </a>
+      </div>
 
       <div className="hero-bottom" data-hero-fade>
         <span>{t('hero.coords')}</span>

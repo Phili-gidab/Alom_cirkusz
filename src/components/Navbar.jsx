@@ -76,7 +76,7 @@ export default function Navbar({ loaded }) {
           <span className="nav-brand-name">Álom Cirkusz</span>
         </a>
 
-        <nav className="nav-links" aria-label="Főmenü">
+        <nav className="nav-links" aria-label={t('a11y.mainNav')}>
           {LINKS.map((l) => (
             <a key={l.key} href={l.hash} className="nav-link" onClick={(e) => goTo(e, l.hash)}>
               {t(`nav.${l.key}`)}
@@ -85,10 +85,12 @@ export default function Navbar({ loaded }) {
         </nav>
 
         <div className="nav-right">
-          <div className="lang-toggle" role="group" aria-label="Nyelv / Language">
+          <div className="lang-toggle" role="group" aria-label={t('a11y.langGroup')}>
             <button
               className={`lang-btn ${lang === 'hu' ? 'is-active' : ''}`}
               onClick={() => setLang('hu')}
+              aria-pressed={lang === 'hu'}
+              aria-label={t('a11y.langHu')}
             >
               HU
             </button>
@@ -96,6 +98,8 @@ export default function Navbar({ loaded }) {
             <button
               className={`lang-btn ${lang === 'en' ? 'is-active' : ''}`}
               onClick={() => setLang('en')}
+              aria-pressed={lang === 'en'}
+              aria-label={t('a11y.langEn')}
             >
               EN
             </button>
@@ -146,11 +150,15 @@ export default function Navbar({ loaded }) {
               exit={{ opacity: 0, transition: { duration: 0.2 } }}
             >
               <div className="lang-toggle lang-toggle--menu">
-                <button className={`lang-btn ${lang === 'hu' ? 'is-active' : ''}`} onClick={() => setLang('hu')}>
+                <button className={`lang-btn ${lang === 'hu' ? 'is-active' : ''}`} onClick={() => setLang('hu')}
+              aria-pressed={lang === 'hu'}
+              aria-label={t('a11y.langHu')}>
                   Magyar
                 </button>
                 <span className="lang-sep">/</span>
-                <button className={`lang-btn ${lang === 'en' ? 'is-active' : ''}`} onClick={() => setLang('en')}>
+                <button className={`lang-btn ${lang === 'en' ? 'is-active' : ''}`} onClick={() => setLang('en')}
+              aria-pressed={lang === 'en'}
+              aria-label={t('a11y.langEn')}>
                   English
                 </button>
               </div>
