@@ -280,6 +280,14 @@ const resources = {
         qtyMore: 'Eggyel több jegy',
         each: 'jegyenként',
         total: 'Összesen',
+        opened:
+          'Megnyitottuk a levelezőprogramodat a kész foglalással — küldd el, és 24 órán belül visszaigazoljuk.',
+        noMailTitle: 'Nem nyílt meg a levelezőprogramod?',
+        copy: 'Foglalás adatainak másolása',
+        copied: 'Kimásolva ✓',
+        soonNote: 'A további városok foglalása hamarosan nyílik meg.',
+        noneBookable:
+          'A következő állomások időpontjai még egyeztetés alatt állnak. Írj nekünk, és szólunk, amint megnyílik a foglalás.',
         cityLabel: 'Város és időpont',
         nameLabel: 'Név',
         namePh: 'A neved',
@@ -574,6 +582,14 @@ const resources = {
         qtyMore: 'One ticket more',
         each: 'per ticket',
         total: 'Total',
+        opened:
+          'We have opened your email app with the booking ready — send it and we will confirm within 24 hours.',
+        noMailTitle: 'Email app did not open?',
+        copy: 'Copy booking details',
+        copied: 'Copied ✓',
+        soonNote: 'Booking for the remaining cities opens soon.',
+        noneBookable:
+          'Dates for the next stops are still being confirmed. Write to us and we will let you know as soon as booking opens.',
         cityLabel: 'City & dates',
         nameLabel: 'Name',
         namePh: 'Your name',

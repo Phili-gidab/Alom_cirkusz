@@ -1967,6 +1967,43 @@
   margin-top: 0.5rem;
 }
 
+/* shown after the mailto: draft is opened — we cannot know whether a mail
+   client actually exists, so the manual route is always offered */
+.modal-fallback {
+  margin-top: 1.6rem;
+  padding: 1.1rem 1.2rem;
+  border-radius: 12px;
+  background: rgba(26, 13, 14, 0.06);
+  border: 1px solid rgba(26, 13, 14, 0.14);
+}
+
+.modal-fallback-title {
+  font-family: var(--font-condensed);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.68rem;
+  color: var(--red);
+  margin-bottom: 0.5rem;
+}
+
+.modal-fallback .modal-note {
+  margin-top: 0;
+}
+
+.modal-copy {
+  margin-top: 0.9rem;
+  font-size: 0.72rem;
+  padding: 0.7rem 1.3rem;
+}
+
+.form-note {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  opacity: 0.6;
+}
+
 /* ---------- TICKET CHECKOUT MODAL ---------- */
 
 .modal-backdrop {

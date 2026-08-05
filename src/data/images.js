@@ -30,7 +30,12 @@ const STOCK = {
 
 export const IMAGES = {
   hero: {
-    local: '/images/hero_image.png',
+    // The master is a 2.3 MB PNG — the wrong format for a photograph. WebP at
+    // q=85 is 256 KB with no visible difference (error sits only on thin
+    // high-contrast edges, under a blend layer and film grain). The .jpg is the
+    // fallback so non-WebP browsers never pull the PNG either.
+    local: '/images/hero_image.jpg',
+    webp: '/images/hero_image.webp',
     web: u(STOCK.tentLit, 1900),
     alt: 'Az Álom Cirkusz sátra kivilágítva az esti fényben',
   },
