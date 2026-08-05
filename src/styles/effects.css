@@ -1,0 +1,311 @@
+﻿/* ============================================================
+   ÁLOM CIRKUSZ — creative effects
+   Idea 2: the searchlight scene  (.spot-*)
+   Idea 3: hand-drawn line art    (.rope-*, .doodle*)
+   Each block is self-contained so a losing idea deletes cleanly.
+   ============================================================ */
+
+/* ---------- IDEA 2 · the searchlight ---------- */
+
+.spot {
+  position: relative;
+  min-height: 92svh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: #070304;
+  padding-block: var(--section-pad) 4.5rem;
+}
+
+.spot-under {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  -webkit-mask-image: radial-gradient(
+    circle var(--spot-r, 0px) at var(--spot-x, 50%) var(--spot-y, 45%),
+    #000 0%,
+    rgba(0, 0, 0, 0.95) 50%,
+    transparent 99%
+  );
+  mask-image: radial-gradient(
+    circle var(--spot-r, 0px) at var(--spot-x, 50%) var(--spot-y, 45%),
+    #000 0%,
+    rgba(0, 0, 0, 0.95) 50%,
+    transparent 99%
+  );
+}
+
+.spot-ghost {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  translate: -50% -50%;
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 13vw, 11rem);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(247, 238, 218, 0.3);
+}
+
+.spot-shot {
+  position: absolute;
+  width: clamp(160px, 21vw, 300px);
+  border: 6px solid var(--cream);
+  border-bottom-width: 2.4rem;
+  border-radius: 6px;
+  background: var(--red-dark);
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.55);
+}
+
+.spot-shot--0 {
+  left: 11%;
+  top: 16%;
+  transform: rotate(-5deg);
+}
+
+.spot-shot--1 {
+  left: 43%;
+  top: 34%;
+  transform: rotate(2.5deg);
+}
+
+.spot-shot--2 {
+  right: 9%;
+  top: 10%;
+  transform: rotate(6deg);
+}
+
+.spot-shot-img,
+.spot-shot .img-fallback {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  min-height: 0;
+}
+
+.spot-cap {
+  position: absolute;
+  bottom: -2rem;
+  left: 50%;
+  translate: -50%;
+  font-family: var(--font-italic);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.spot-cover {
+  position: relative;
+  z-index: 1;
+}
+
+.spot-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.1rem, 4.6vw, 4rem);
+  line-height: 1.12;
+  max-width: 22ch;
+}
+
+.spot-title em {
+  font-family: var(--font-italic);
+  font-style: italic;
+  color: var(--gold-2);
+}
+
+.spot-hint {
+  margin-top: 1.5rem;
+  font-family: var(--font-condensed);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.7rem;
+  color: rgba(247, 238, 218, 0.55);
+}
+
+.spot-hint-coarse {
+  display: none;
+}
+
+@media (pointer: coarse) {
+  .spot-hint-fine {
+    display: none;
+  }
+  .spot-hint-coarse {
+    display: inline;
+  }
+}
+
+/* ---------- IDEA 3 · line art ---------- */
+
+/* the tightrope walker crossing the bottom of the viewport */
+.rope-stage {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 64px;
+  z-index: 540;
+  pointer-events: none;
+}
+
+.rope-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.rope-line {
+  stroke: #a39584;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  opacity: 0.75;
+}
+
+.rope-walker {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  width: 48px;
+  height: 48px;
+  will-change: transform;
+}
+
+.walker-pole,
+.walker-line {
+  stroke: #c0453e;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.walker-pole {
+  stroke: #a39584;
+}
+
+/* shared doodle stroke language */
+.doodle {
+  pointer-events: none;
+}
+
+.doodle path,
+.doodle circle {
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* bunting strung across the top of the About section */
+.about-bunting {
+  position: absolute;
+  top: 1.6rem;
+  left: 4vw;
+  right: 4vw;
+  width: auto;
+  height: clamp(40px, 6vw, 72px);
+}
+
+.bunting-string {
+  stroke: rgba(26, 13, 14, 0.55);
+  stroke-width: 1.6;
+}
+
+.bunting-flag {
+  stroke: var(--red);
+  fill: rgba(217, 38, 50, 0.08);
+}
+
+.bunting-flag.is-gold {
+  stroke: var(--gold);
+  fill: rgba(233, 161, 59, 0.1);
+}
+
+/* trapeze artist hanging from the top edge of the Tour section */
+.tour {
+  position: relative;
+}
+
+.tour-trapeze {
+  position: absolute;
+  top: 0;
+  right: 7vw;
+  width: clamp(70px, 9vw, 110px);
+  height: auto;
+  z-index: 0;
+}
+
+.tour .container {
+  position: relative;
+  z-index: 1;
+}
+
+.trapeze-rig {
+  stroke: rgba(26, 13, 14, 0.45);
+  stroke-width: 1.7;
+}
+
+.trapeze-artist {
+  stroke: var(--red);
+}
+
+/* the spark next to an opening FAQ answer */
+.faq-answer {
+  position: relative;
+}
+
+.faq-flourish {
+  position: absolute;
+  left: 0.5rem;
+  top: 0.15rem;
+  width: 26px;
+  height: 26px;
+}
+
+.faq-flourish path,
+.faq-flourish circle {
+  stroke: var(--red);
+  stroke-width: 2.4;
+}
+
+/* ---------- responsive & reduced motion ---------- */
+
+@media (max-width: 768px) {
+  .rope-stage {
+    height: 52px;
+  }
+
+  .rope-walker {
+    transform-origin: 50% 100%;
+    scale: 0.8;
+  }
+
+  .spot-shot--1 {
+    left: 30%;
+    top: 44%;
+  }
+
+  .about-bunting {
+    top: 1rem;
+  }
+
+  .tour-trapeze {
+    right: 4vw;
+    width: 60px;
+  }
+
+  .faq-flourish {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rope-stage {
+    display: none;
+  }
+
+  /* the map lies flat and the pins keep a fixed, modest height */
+  .tourmap {
+    --lean: 0 !important;
+  }
+}

@@ -1,0 +1,369 @@
+﻿/* ============================================================
+   ÁLOM CIRKUSZ — design tokens, reset & utilities
+   ============================================================ */
+
+:root {
+  /* palette — vintage circus poster under a red moon */
+  --black: #0b0507;
+  --black-2: #150809;
+  --red: #d92632;
+  --red-bright: #ff3b45;
+  --red-deep: #8f1218;
+  --red-dark: #56090d;
+  --cream: #f7eeda;
+  --cream-2: #efe3c8;
+  --ink: #1a0d0e;
+  --gold: #e9a13b;
+  --gold-2: #f6c15c;
+
+  --font-display: 'Abril Fatface', serif;
+  --font-condensed: 'Oswald', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+  --font-italic: 'Playfair Display', serif;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inout: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --section-pad: clamp(7rem, 14vh, 11rem);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+/* Lenis smooth-scroll hooks */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--black);
+  color: var(--cream);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--red);
+  color: var(--cream);
+}
+
+/* ---------- focus ----------
+   Keyboard users get a visible ring everywhere; mouse users never see it.
+   Two-tone so it stays visible on cream, on red and on near-black. */
+
+:focus-visible {
+  outline: 3px solid var(--gold-2);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.section-cream :focus-visible {
+  outline-color: var(--red);
+}
+
+/* form fields clear their outline on :focus but must keep one on :focus-visible */
+.form-field input:focus-visible,
+.form-field textarea:focus-visible,
+.form-field select:focus-visible {
+  outline: 3px solid var(--gold-2);
+  outline-offset: 2px;
+}
+
+.section-cream .form-field input:focus-visible,
+.modal-card :focus-visible {
+  outline-color: var(--red);
+}
+
+/* ---------- layout utilities ---------- */
+
+.container {
+  width: min(92vw, 1400px);
+  margin-inline: auto;
+}
+
+.container--narrow {
+  width: min(92vw, 900px);
+}
+
+.section-cream {
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.section-dark {
+  background: var(--black);
+  color: var(--cream);
+}
+
+.section-label {
+  font-family: var(--font-condensed);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.8rem;
+  color: var(--red);
+  margin-bottom: 2.2rem;
+}
+
+.section-label--light {
+  color: var(--gold);
+}
+
+.section-label--onred {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* split-word helper */
+.w {
+  display: inline-block;
+  margin-right: 0.26em;
+}
+
+/* ---------- buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  font-family: var(--font-condensed);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 1rem 2.1rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  transition:
+    transform 0.35s var(--ease-out),
+    background-color 0.35s,
+    color 0.35s,
+    border-color 0.35s,
+    box-shadow 0.35s;
+}
+
+.btn--red {
+  background: var(--red);
+  color: #fff;
+  box-shadow: 0 12px 34px rgba(217, 38, 50, 0.35);
+}
+.btn--red:hover {
+  background: var(--red-bright);
+  transform: translateY(-3px);
+}
+
+.btn--ghost {
+  border-color: rgba(247, 238, 218, 0.4);
+  color: var(--cream);
+}
+.btn--ghost:hover {
+  background: var(--cream);
+  color: var(--ink);
+  transform: translateY(-3px);
+}
+
+.btn--dark {
+  background: var(--ink);
+  color: var(--cream);
+}
+.btn--dark:hover {
+  background: var(--red);
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+.btn--big {
+  font-size: 1rem;
+  padding: 1.35rem 3rem;
+  margin-top: 2.6rem;
+}
+
+/* ---------- film-grain noise overlay ---------- */
+
+.noise {
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  z-index: 900;
+  pointer-events: none;
+  opacity: 0.055;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 8s steps(10) infinite;
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-3%, -2%); }
+  30% { transform: translate(2%, -4%); }
+  50% { transform: translate(-4%, 3%); }
+  70% { transform: translate(4%, 2%); }
+  90% { transform: translate(-2%, 4%); }
+}
+
+/* ---------- custom cursor ---------- */
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2000;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--red-bright);
+}
+
+.cursor-ring {
+  width: 38px;
+  height: 38px;
+  border: 1.5px solid rgba(255, 59, 69, 0.75);
+  transition:
+    opacity 0.3s,
+    width 0.35s var(--ease-out),
+    height 0.35s var(--ease-out),
+    background-color 0.35s;
+}
+
+.cursor-ring.is-hover {
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 59, 69, 0.12);
+}
+
+body.cursor-active .cursor-dot,
+body.cursor-active .cursor-ring {
+  opacity: 1;
+}
+
+@media (pointer: fine) {
+  body.cursor-active,
+  body.cursor-active a,
+  body.cursor-active button {
+    cursor: none;
+  }
+}
+
+@media (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
+
+/* ---------- image fallback tile ---------- */
+
+.img-fallback {
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(120% 120% at 30% 20%, #a3141d, var(--red-dark));
+}
+
+.img-fallback-star {
+  font-size: 3rem;
+  color: rgba(247, 238, 218, 0.55);
+  animation: spin 10s linear infinite;
+}
+
+/* ---------- shared keyframes ---------- */
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.12;
+    transform: scale(0.7);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+}
+
+/* ---------- reduced motion ----------
+   Broad by default so anything added later is safe without being listed:
+   every animation and transition collapses to effectively instant. Opacity
+   fades are left alone — they carry no motion and keep reveals from popping. */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .noise,
+  .img-fallback-star,
+  .star,
+  .pre-star,
+  .circular-badge svg,
+  .marquee-track,
+  .hero-figure .hero-img,
+  .scroll-cue i,
+  .acts-hint-arrow,
+  .acts-outro-star,
+  .tickets-ghost-star,
+  .map-city-pulse,
+  .map-caravan,
+  .hero-dot.active > span {
+    animation: none !important;
+  }
+
+  /* the 3D map lies flat rather than tilting */
+  .tourmap-stack {
+    transform: none !important;
+  }
+}
